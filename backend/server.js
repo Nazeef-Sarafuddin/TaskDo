@@ -35,8 +35,8 @@ connectDB();
 // MIDDLEWARE
 // ─────────────────────────────────────────────
 app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
+  origin: "https://task-do-gamma.vercel.app",
+  credentials: true
 }));
 
 app.use(express.json());
