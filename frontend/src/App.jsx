@@ -10,7 +10,7 @@ function App() {
     const [tasks, setTasks] = useState([]);
     const [editingId, setEditingId] = useState(null);
     const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
-    const API = 'https://mydo-smoky.vercel.app'
+    const API = 'https://mydo-smoky.vercel.app/api/tasks'
 
     // Apply theme to <html>
     useEffect(() => {

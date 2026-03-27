@@ -10,7 +10,7 @@ export default function AddTask({ addTask }) {
         addTask({
             title,
             description,
-            createdAt: date || new Date()
+            createdAt: date ? new Date(date) : new Date()
         });
         setTitle("");
         setDescription("");
