@@ -35,8 +35,8 @@ connectDB();
 // MIDDLEWARE
 // ─────────────────────────────────────────────
 app.use(cors({
-  origin: "https://task-do-gamma.vercel.app",
-  credentials: true
+    origin: "https://task-do-gamma.vercel.app",
+    credentials: true
 }));
 
 app.use(express.json());
@@ -60,6 +60,12 @@ app.use((req, res, next) => {
 // ─────────────────────────────────────────────
 // API ROUTES
 // ─────────────────────────────────────────────
+
+
+app.options("*", cors({
+    origin: "https://task-do-gamma.vercel.app",
+    credentials: true
+}));
 
 // GET all tasks
 app.get('/api/tasks', async (req, res) => {
