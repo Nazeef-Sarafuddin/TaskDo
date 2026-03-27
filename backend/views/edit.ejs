@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="/stylesheets/edit.css">
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <span class="label">Editing</span>
+        <h1>Edit Task</h1>
+    </header>
+
+    <div class="form-card">
+        <form action="/todo/<%= task._id %>?_method=PUT" method="post">
+
+            <div class="field">
+                <label for="title">Task Name</label>
+                <input type="text" name="task[title]" id="title" value="<%= task.title %>">
+            </div>
+
+            <div class="field-divider"></div>
+
+            <div class="field">
+                <label for="description">Description</label>
+                <input type="text" name="task[description]" id="description" value="<%= task.description %>">
+            </div>
+
+            <div class="field-divider"></div>
+
+            <div class="field">
+                <label for="createdAt">Date</label>
+                <input type="date" name="task[createdAt]" id="createdAt"
+                    value="<%= task.createdAt ? task.createdAt.toISOString().split('T')[0] : '' %>">
+            </div>
+
+            <div class="actions">
+                <a href="/todo" class="btn-back">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                    Back to Tasks
+                </a>
+                <button type="submit" class="btn-submit">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

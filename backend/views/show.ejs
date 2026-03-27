@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks</title>
+    <link rel="stylesheet" href="/stylesheets/show.css">
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <div class="header-left">
+            <span class="label">Dashboard</span>
+            <h1>My Tasks</h1>
+            <p class="task-count">
+                <%= tasks.filter(t => !t.completed).length %> remaining
+                <span class="sep">·</span>
+                <%= tasks.filter(t => t.completed).length %> done
+            </p>
+        </div>
+        <a href="/todo/new" class="btn-add">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Task
+        </a>
+    </header>
+
+    <div class="task-list">
+        <% if(tasks.length === 0) { %>
+            <div class="empty">No tasks yet. Hit <strong>Add Task</strong> to get started.</div>
+        <% } %>
+
+        <% for(let [i, t] of tasks.entries()) { %>
+        <div class="task-card <%= t.completed ? 'is-done' : '' %>">
+
+            <!-- Completed toggle -->
+            <form action="/todo/<%= t._id %>/toggle?_method=PATCH" method="post">
+                <button type="submit" class="btn-check <%= t.completed ? 'checked' : '' %>" title="Toggle complete">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </button>
+            </form>
+
+            <span class="task-index"><%= String(i + 1).padStart(2, '0') %></span>
+            <span class="task-title"><%= t.title %></span>
+
+            <div class="task-actions">
+                <a href="/todo/<%= t._id %>/edit" class="btn-edit">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </a>
+                <div class="task-divider"></div>
+                <form action="/todo/<%= t._id %>?_method=DELETE" method="post">
+                    <button class="btn-delete" title="Delete task">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6l-1 14H6L5 6"/>
+                            <path d="M10 11v6M14 11v6"/>
+                            <path d="M9 6V4h6v2"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+</div>
+</body>
+</html>
