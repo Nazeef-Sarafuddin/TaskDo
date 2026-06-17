@@ -6,7 +6,7 @@ import TaskList from "./components/TaskList";
 
 axios.defaults.withCredentials = true;
 
-const API = "http://localhost:5000/api/tasks";
+const API = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/tasks`;
 
 function App() {
   const [tasks, setTasks] = useState([]);
