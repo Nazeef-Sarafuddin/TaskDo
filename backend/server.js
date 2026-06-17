@@ -13,10 +13,15 @@ const allowedOrigins = [
     "https://taskdo-gold.vercel.app" // Your live domain
 ];
 
+// ✅ DYNAMIC CORS CONFIGURATION
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        // Allow local machine testing, requests with no origin (like Postman),
+        // and ANY Vercel subdomain automatically
+        if (!origin ||
+            origin === "http://localhost:5173" ||
+            origin.endsWith(".vercel.app")
+        ) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
