@@ -60,8 +60,8 @@ app.use((req, res, next) => {
         res.cookie('userId', userId, {
             maxAge: 365 * 24 * 60 * 60 * 1000,
             httpOnly: true,
-            secure: false,
-            sameSite: "lax"
+            secure: true,
+            sameSite: "none"
         });
     }
 
