@@ -115,7 +115,6 @@ button {
   cursor: pointer;
 }
 
-
 .container {
   position: relative;
   z-index: 1;
@@ -489,9 +488,8 @@ button {
 .task-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
   flex-shrink: 0;
-  margin-top: 1px;
 }
 .task-divider {
   width: 1px;
@@ -502,19 +500,26 @@ button {
 .btn-edit {
   display: inline-flex;
   align-items: center;
+  justify-content: center; /* ✅ center content */
   gap: 0.35rem;
+
   font-family: "DM Mono", monospace;
   font-size: 0.68rem;
   color: var(--muted);
   background: transparent;
   border: 1px solid var(--border);
-  padding: 0.35rem 0.65rem;
-  border-radius: 5px;
+
+  height: 32px; /* ✅ fixed height */
+  min-width: 70px; /* ✅ consistent width */
+  padding: 0 10px; /* ✅ horizontal padding only */
+
+  border-radius: 8px; /* slightly smoother */
+  white-space: nowrap;
+
   transition:
     color 0.15s,
     border-color 0.15s,
     background 0.15s;
-  white-space: nowrap;
 }
 
 .btn-edit:hover {
@@ -549,16 +554,15 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+
+  height: 32px;
+  min-width: 70px;
+  padding: 0 10px;
+
+  border-radius: 8px;
   border: 1px solid var(--border);
-  color: var(--muted);
-  width: 30px;
-  height: 30px;
-  border-radius: 5px;
-  transition:
-    color 0.15s,
-    border-color 0.15s,
-    background 0.15s;
+  background: transparent;
+  color: var(--danger);
 }
 
 .btn-delete:hover {
@@ -647,4 +651,81 @@ button {
   .task-edit-input.date-input {
     flex: 1;
   }
+}
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  margin-top: 10px;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid #222;
+  transition: 0.2s ease;
+}
+
+.task-card:hover {
+  border-color: #333;
+}
+
+/* LEFT SIDE */
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Checkbox */
+.btn-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  background: transparent;
+  cursor: pointer;
+}
+
+.btn-check.checked {
+  background: #b4ff3a;
+  border-color: #b4ff3a;
+}
+
+/* Index */
+.task-index {
+  font-size: 12px;
+  color: #777;
+  min-width: 24px;
+}
+
+/* Title */
+.task-title {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Completed style */
+.task-card.is-done .task-title {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* RIGHT SIDE */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Buttons */
+.btn-edit,
+.btn-delete {
+  background: transparent;
+  border: 1px solid #333;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  color: #ff5a5a;
 }

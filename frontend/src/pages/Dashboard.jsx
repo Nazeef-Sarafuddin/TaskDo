@@ -1,22 +1,17 @@
-import "./App.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import AddTask from "./components/AddTask";
-import TaskList from "./components/TaskList";
-
-axios.defaults.withCredentials = true;
+import AddTask from "../components/AddTask";
+import TaskList from "../components/TaskList";
 
 const API = "http://localhost:5000/api/tasks";
 
-function App() {
+export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [theme, setTheme] = useState("dark");
-  const [loading, setLoading] = useState(true);
 
   const getTasks = async () => {
     try {
-      setLoading(true);
       const res = await axios.get(API);
 
       if (Array.isArray(res.data)) {
@@ -26,10 +21,8 @@ function App() {
       } else {
         setTasks([]);
       }
-    } catch (err) {
+    } catch {
       setTasks([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -41,32 +34,25 @@ function App() {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  // ✅ Optimized add
   const addTask = async (data) => {
-    const res = await axios.post(API, data);
-    setTasks((prev) => [...prev, res.data]);
+    await axios.post(API, data);
+    getTasks();
   };
 
-  // ✅ Optimized toggle
   const toggleTask = async (id) => {
-    const res = await axios.patch(`${API}/${id}/toggle`);
-    setTasks((prev) =>
-      prev.map((t) => (t._id === id ? res.data : t))
-    );
+    await axios.patch(`${API}/${id}/toggle`);
+    getTasks();
   };
 
-  // ✅ Optimized delete
   const deleteTask = async (id) => {
     await axios.delete(`${API}/${id}`);
-    setTasks((prev) => prev.filter((t) => t._id !== id));
+    getTasks();
   };
 
   const updateTask = async (id, data) => {
-    const res = await axios.put(`${API}/${id}`, data);
+    await axios.put(`${API}/${id}`, data);
     setEditingId(null);
-    setTasks((prev) =>
-      prev.map((t) => (t._id === id ? res.data : t))
-    );
+    getTasks();
   };
 
   const done = tasks.filter((t) => t.completed).length;
@@ -99,13 +85,10 @@ function App() {
       <AddTask addTask={addTask} />
 
       <div className="task-list">
-        {loading && (
-          <div className="empty">Loading...</div>
-        )}
-
-        {!loading && tasks.length === 0 && (
+        {tasks.length === 0 && (
           <div className="empty">
-            No tasks yet. Add one above to get started.
+            <h3>No tasks yet</h3>
+            <p>Add one above to get started</p>
           </div>
         )}
 
@@ -121,5 +104,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
